@@ -34,7 +34,10 @@ module ttl74x153 (
     wire [3:0] c [1:2];
     wire [1:0] select;
 
-    assign c = {'{c13, c12, c11, c10}, '{c13, c12, c11, c10}};
+    assign c[1] =
+        {c13, c12, c11, c10};
+    assign c[2] =
+        {c23, c22, c21, c20};
     assign select = {b, a};
 
     assign y1 = ~enable1 & c[1][select];
