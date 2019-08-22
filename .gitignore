@@ -1,0 +1,6 @@
+.python-version
+.idea/
+sim/*/work/
+sim/*/Makefile
+sim/*/run.command
+
