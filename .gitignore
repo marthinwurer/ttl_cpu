@@ -3,4 +3,7 @@
 sim/*/work/
 sim/*/Makefile
 sim/*/run.command
+sim/all_tbs/
 
+*.vcd
+*.vvp

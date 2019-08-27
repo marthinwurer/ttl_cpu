@@ -19,12 +19,6 @@ module tb_74x153 ();
     y1,
     y2;
 
-    // declare our test data
-    parameter inbetween = 50;
-    parameter num_tests = 19;
-    reg [13:0] test_info[num_tests];
-    reg[31:0] test;
-
     // module under test
     ttl74x153 to_test (
         a,  // a on datasheet
@@ -43,8 +37,15 @@ module tb_74x153 ();
         y1,
         y2);
 
+    // declare our test data
+    parameter inbetween = 50;
+    parameter num_tests = 19;
+    reg[31:0] successes;
+    reg [13:0] test_info[num_tests];
+    reg[31:0] test;
+
     initial begin
-        $dumpfile("tb_74x153.vcd");
+        $dumpfile("waveform.vcd");
         $dumpvars(0,to_test);
         //                      c1  c2  yy
         //                  abgg0123012312
@@ -67,6 +68,8 @@ module tb_74x153 ();
         test_info[16]<= 14'b11111111111100;
         test_info[17]<= 14'b11011111111110;
         test_info[18]<= 14'b11101111111101;
+
+        successes <= 0;
 //        #inbetween;
         for (test = 0; test < num_tests; test = test + 1) begin
             // assign
@@ -77,9 +80,18 @@ module tb_74x153 ();
 //            assert ({y1, y2} == test_info[1:0]);
             if ({y1, y2} != test_info[test][1:0]) begin
                 $display("Assertation failed at test %h", test);
+            end else begin
+                successes <= successes + 1;
             end
         end
         #inbetween;
+
+        if (successes == num_tests) begin
+            $display("Test was successful");
+        end else begin
+            $display("Test failed");
+        end
+
         $finish;
     end
 
