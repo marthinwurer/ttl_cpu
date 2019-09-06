@@ -72,7 +72,7 @@ module tb_74x169 ();
             // do our assert
             testval <= {rco, q};
             testdesired <= test_info[test][4:0];
-            if (testval != testdesired) begin
+            if (testval !== testdesired) begin
                 $display("Assertation failed at test %d: %b does not match %b", test, testval, testdesired);
             end else begin
                 successes <= successes + 1;

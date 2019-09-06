@@ -78,7 +78,7 @@ module tb_74x153 ();
             #inbetween;
             // assert
 //            assert ({y1, y2} == test_info[1:0]);
-            if ({y1, y2} != test_info[test][1:0]) begin
+            if ({y1, y2} !== test_info[test][1:0]) begin
                 $display("Assertation failed at test %h", test);
             end else begin
                 successes <= successes + 1;
