@@ -361,12 +361,117 @@ Memory map a display register and an input set of switches with an enter button.
 
 
 
+## Types of parts needed
+
+- Registers
+- buffers
+- counters
+- luts
+- adders
+
+
+time to rederive the gigatron ALU.
 
 
 
+153 is a dual lut with a single select.
 
+Operations will be:
 
+and
+or
+xor
+not
 
+add
+sub
+shift left
+shift right
 
+basic idea is that you have luts compute inputs to an adder.
+Adder can add with 0 for pass through or A with itself to shift right.
+oooh, could I steal the nandgame alu, but 8 bits?
+I might be able to do right shift with subtraction.
+Nah, I don't think so.
 
+6502's operations were:
+Add
+and
+or
+xor
+shift right
 
+Basic division algorithm: subtract until you hit result :)
+faster: shift left, then test.
+Oh, you might be able to do that with right shift too
+
+Copy number
+
+102/3 = 34
+01100110 / 00000011
+
+- shift left
+- shift overflow into test
+- test = test > divisior ? test - divisor : test 
+- shift not zero into result
+
+When we have looped our bit width times, we're done. 
+
+Ok, so division is definitely possible.
+
+so, make the lut truth tables for each operation.
+
+AND
+A B Ao Bo
+0 0 0  0
+0 1 0  0
+1 0 0  0
+1 1 1  0
+
+OR
+A B Ao Bo
+0 0 0  0
+0 1 1  0
+1 0 1  0
+1 1 1  0
+
+XOR
+A B Ao Bo
+0 0 0  0
+0 1 1  0
+1 0 1  0
+1 1 0  0
+
+NOT
+A B Ao Bo
+0 0 1  0
+0 1 1  0
+1 0 0  0
+1 1 0  0
+
+Add
+A B Ao Bo
+0 0 0  0
+0 1 0  1
+1 0 1  0
+1 1 1  1
+
+Sub
+A B Ao Bo
+0 0 0  1
+0 1 0  0
+1 0 1  1
+1 1 1  0
+
+Left shift
+A B Ao Bo
+0 0 0  0
+0 1 0  0
+1 0 1  1
+1 1 1  1
+
+A B Ao Bo
+0 0 0  0
+0 1 0  0
+1 0 0  0
+1 1 0  0

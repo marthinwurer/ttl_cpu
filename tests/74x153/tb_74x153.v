@@ -8,16 +8,10 @@ module tb_74x153 ();
     b,  // b on datasheet
     enable1,  // g on datasheet, active low
     enable2,  // g on datasheet, active low
-    c10,
-    c11,
-    c12,
-    c13,
-    c20,
-    c21,
-    c22,
-    c23,
     y1,
     y2;
+
+    reg [3:0] c1, c2;
 
     // module under test
     ttl74x153 to_test (
@@ -25,15 +19,8 @@ module tb_74x153 ();
         b,  // b on datasheet
         enable1,  // g on datasheet, active low
         enable2,  // g on datasheet, active low
-        c10,
-
-        c11,
-        c12,
-        c13,
-        c20,
-        c21,
-        c22,
-        c23,
+        c1,
+        c2,
         y1,
         y2);
 
@@ -72,8 +59,9 @@ module tb_74x153 ();
         successes <= 0;
 //        #inbetween;
         for (test = 0; test < num_tests; test = test + 1) begin
+            #inbetween;
             // assign
-            {a, b, enable1, enable2, c10, c11, c12, c13, c20, c21, c22, c23} <= test_info[test][13:2];
+            {a, b, enable1, enable2, c1[0], c1[1], c1[2], c1[3], c2[0], c2[1], c2[2], c2[3]} <= test_info[test][13:2];
             // wait
             #inbetween;
             // assert
